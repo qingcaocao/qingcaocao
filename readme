@@ -1,1 +1,5 @@
-####test
+#vue 重构有赞商城项目
+##技术栈
+- html5 css3 js
+- sass预处理器 
+- vue vue-router vuex
