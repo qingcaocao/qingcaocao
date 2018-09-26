@@ -25,6 +25,8 @@ export default {
   created(){
     console.log(this.lists)
   },
+  //dom结构生成插入轮播实例(依赖DOM的组建都需要在mounted处理)
+  //mounted阶段可以找到vue实例的this
   mounted(){
     this.init()
   },
@@ -37,8 +39,19 @@ export default {
         clickable: true,
         },
         autoplay: {
-        delay: 2500,
+        delay: 3000,
         disableOnInteraction: false,
+        },
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows : true,
         },
       })
     }

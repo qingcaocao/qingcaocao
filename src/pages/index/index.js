@@ -1,7 +1,5 @@
 import 'css/common.css'
 import './index.css'
-import 'css/common.css'
-import './index.css'
 
 import Vue from 'vue'
 import axios from 'axios'
