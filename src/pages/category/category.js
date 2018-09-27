@@ -10,7 +10,8 @@ import Foot from 'components/Foot.vue'
 new Vue({
   el: '#category',
   data: {
-    topLists: null
+    topLists: null,
+    topIndex: 0
   },
   created() {
     this.getTopList()
@@ -23,6 +24,11 @@ new Vue({
       }).catch(
         console.log('err')
       )
+    },
+    getSublist(id,index){
+      this.topIndex = index
+      console.log(id)
+      console.log(index)
     }
   },
   components: {

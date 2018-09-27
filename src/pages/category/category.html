@@ -21,8 +21,8 @@
 </head>
 
 <body class=" " style="">
-  <div id="category">
-  <div class="container with-bottom-nav" style="min-height: 667px; height: 667px;">
+  <div id="category" >
+  <div class="container with-bottom-nav" style="min-height: 667px; height: 667px;" v-cloak>
     <div class="custom-search js-search-bar">
       <form>
         <input type="search" class="custom-search-input" autocomplete="off" name="keyword" value="" placeholder="搜索更赞的商品">
@@ -52,16 +52,20 @@
       <div class="class-nav">
         <div id="scroll-nav" style="height: 100%;">
           <ul class="nav" id="scroll-nav-content" style="height: 540px; transform: translate3d(0px, 0px, 0px);">
-            <li class="category-name js-category-name active" data-cid="-1"
-             v-for='list in topLists'
-            >综合排行</li>
-
+            <li class="category-name js-category-name"
+              :class='{active:index === topIndex}'
+              :data-cid="list.id"
+              :key='list.id'
+              v-for='(list,index) in topLists'
+              @click='getSublist(list.id,index)'
+            >{{list.name}}</li>
           </ul>
         </div>
       </div>
       <div class="class-category">
         <div id="scroll-main-wrap" class="main-content">
-          <div id="scroll-main-content" class="js-main-content inner-content" style="height: 943px; transform: translate3d(0px, 0px, 0px); display: none;">
+          <div id="scroll-main-content" class="js-main-content inner-content" style="height: 943px; transform: translate3d(0px, 0px, 0px);"
+            v-show='topIndex==0'>
             <div class="hot-wrap">
               <div class="hot-goods">
                 <div class="hot-title">
@@ -199,7 +203,8 @@
               </div>
             </div>
           </div>
-          <div id="scroll-main-content" class="js-main-content inner-content" style="height: 534px; transform: translate3d(0px, 0px, 0px);">
+          <div id="scroll-main-content" class="js-main-content inner-content" style="height: 534px; transform: translate3d(0px, 0px, 0px);"
+            v-show ='topIndex>0'>
             <h3 class="category-title">热门品牌 </h3>
             <ul class="category-content">
               <li class="category-item js-category-item" data-item-id="85" data-item-name="良品铺子">

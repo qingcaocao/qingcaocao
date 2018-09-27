@@ -13,7 +13,7 @@ import Swipe from 'components/Swipe.vue'
 
 
 new Vue({
-  el: '.vue-el',
+  el: '#yz',
   data: {
     lists: null,
     pageNum: 1,
