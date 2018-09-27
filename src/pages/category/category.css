@@ -754,6 +754,7 @@ html {
 }
 
 .class-nav {
+  padding-bottom: 0;
   position: fixed;
   top: 0;
   left: 0;
