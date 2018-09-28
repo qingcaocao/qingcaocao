@@ -11,27 +11,51 @@ new Vue({
   el: '#category',
   data: {
     topLists: null,
-    topIndex: 0
+    topIndex: 0,
+    subData: null,
+    rankData: null,
+    // price:null
   },
   created() {
     this.getTopList()
+    this.getSublist(0)
+  },
+  mounted() {
   },
   methods: {
     getTopList(){
       axios.post(url.topList).then(res=>{
-        console.log(res)
         this.topLists = res.data.lists
       }).catch(
-        console.log('err')
       )
     },
-    getSublist(id,index){
+    getSublist(index,id){
       this.topIndex = index
-      console.log(id)
-      console.log(index)
-    }
+      if(index===0){
+        this.getRank()
+      }else {
+        axios.post(url.subList,{id}).then(res=>{
+          this.subData = res.data.data
+          console.log('subData',this.subData)
+        })
+      }
+    },
+    getRank(){
+      axios.post(url.rank).then(res=>{
+        this.rankData = res.data.data
+        console.log(res)
+      })
+    },
+  },
+  computed: {
+
   },
   components: {
     Foot
+  },
+  filters: {
+    dataPrice(Price){
+        return Price.toFixed(2)
+      }
   }
 })

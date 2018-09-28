@@ -691,7 +691,7 @@ html {
   height: 100%
 }
 [v-cloak] {
-  display: none
+  display: none;
 }
 .with-bottom-nav,
 .with-bottom-nav .class-nav {
