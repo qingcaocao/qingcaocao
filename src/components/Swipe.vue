@@ -23,7 +23,7 @@ export default {
     }
   },
   created(){
-    console.log(this.lists)
+
   },
   //dom结构生成插入轮播实例(依赖DOM的组建都需要在mounted处理)
   //mounted阶段可以找到vue实例的this

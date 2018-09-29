@@ -37,7 +37,7 @@ new Vue({
         pageNum: this.pageNum,
         pageSize: this.pageSize
       }).then(res=>{
-        console.log(res)
+        // console.log(res)
         //判断数据是否加载完成
         let currentLists = res.data.lists
         if(currentLists.length < this.pageSize){
@@ -57,10 +57,9 @@ new Vue({
     getBanner(){
       axios.get(url.banner).then(res=>{
         this.bannerLists = res.data.lists
-        console.log('banner',this.bannerLists)
+        // console.log('banner',this.bannerLists)
       })
     }
-
   },
   components: {
     Foot,

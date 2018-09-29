@@ -3,7 +3,9 @@ let url = {
   banner: '/index/banner',
   topList:'/category/topList',
   subList:'/category/subList',
-  rank:'/category/rank'
+  rank:'/category/rank',
+  searchList:'/search/list',
+  details: '/goods/detail'
 }
 
 //开发环境和真实环境切换

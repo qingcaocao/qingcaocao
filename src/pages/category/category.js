@@ -13,8 +13,7 @@ new Vue({
     topLists: null,
     topIndex: 0,
     subData: null,
-    rankData: null,
-    // price:null
+    rankData: null
   },
   created() {
     this.getTopList()
@@ -46,6 +45,9 @@ new Vue({
         console.log(res)
       })
     },
+    toSearch(list){
+      location.href = `search.html?keyword=${list.name}&id=${list.id}`
+    }
   },
   computed: {
 
