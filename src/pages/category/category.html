@@ -18,10 +18,16 @@
   <link rel="shortcut icon" href="https://b.yzcdn.cn/v2/image/yz_fc.ico">
   <title>分类</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    [v-cloak] {
+      display: none
+    }
+  </style>
 </head>
 
 <body class=" " style="">
   <div id="category" v-cloak >
+    <div v-if="topLists">
   <div class="container with-bottom-nav" style="min-height: 667px; height: 667px;" >
     <div class="custom-search js-search-bar">
       <form>
@@ -166,6 +172,8 @@
     </div>
   </div>
   <foot></foot>
+</div>
+  <div class="loading" v-else="!topLists" style="text-align:center;width: 100%;padding-top: 50px"><span >加载中。。。</span></div>
 </div>
 </body>
 </html>

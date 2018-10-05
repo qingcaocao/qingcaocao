@@ -5,7 +5,12 @@ let url = {
   subList:'/category/subList',
   rank:'/category/rank',
   searchList:'/search/list',
-  details: '/goods/detail'
+  details: '/goods/detail',
+  addCart: '/cart/add',
+  cartLists: '/cart/list',
+  cartReduce: '/cart/reduce',
+  cartRemove: '/cart/remove',
+  cartMremove: '/cart/mremove'
 }
 
 //开发环境和真实环境切换
