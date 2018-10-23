@@ -17,21 +17,22 @@ new Vue({
   },
   created() {
     this.getTopList()
-    this.getSublist(0)
-  },
-  mounted() {
+    this.getSubList(0)
   },
   methods: {
     getTopList(){
-      axios.post(url.topList).then(res=>{
+      axios.get(url.topList).then(res=>{
+        console.log('topList',res)
         this.topLists = res.data.lists
       }).catch(
       )
     },
-    getSublist(index,id){
+    getSubList(index,id){
+      console.log(index)
       this.topIndex = index
-      if(index===0){
+      if(index === 0){
         this.getRank()
+        console.log('this.topIndex', this.topIndex)
       }else {
         axios.post(url.subList,{id}).then(res=>{
           this.subData = res.data.data
@@ -40,9 +41,9 @@ new Vue({
       }
     },
     getRank(){
-      axios.post(url.rank).then(res=>{
+      axios.get(url.rank).then(res=>{
         this.rankData = res.data.data
-        console.log(res)
+        console.log('rank',res)
       })
     },
     toSearch(list){

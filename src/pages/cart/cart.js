@@ -12,8 +12,8 @@ new Vue({
     cartList: null,
     total: 0,
     editingShop: null,
-    editingShopindex: -1
-
+    editingShopindex: -1,
+    removePopup: false
   },
   created() {
     this.getCartList()
@@ -38,6 +38,22 @@ new Vue({
         })
       }
     },
+    allRemoveSelected: {
+      get() {
+        if(this.editingShop) {
+          return this.editingShop.removeChecked
+        }
+        return false
+      },
+      set(newVal){
+        if(this.editingShop) {
+          this.editingShop.removeChecked = newVal
+          this.editingShop.goodsList.forEach(good => {
+            good.removeChecked = newVal
+          })
+        }
+      }
+    },
     selectLists() {
       if(this.cartList && this.cartList.length){
         let arr = []
@@ -56,7 +72,16 @@ new Vue({
       return []
     },
     removeLists() {
-
+      if(this.editingShop) {
+        let arr=[]
+        this.editingShop.goodsList.forEach(good => {
+          if(good.removeChecked) {
+            arr.push(good)
+          }
+        })
+        return arr
+      }
+      return []
     }
   },
   methods: {
@@ -79,20 +104,23 @@ new Vue({
       })
     },
     selectGood(shop,good) {
-      console.log(good.checked)
-      good.checked = !good.checked
-      shop.checked = shop.goodsList.every(good => {
-        return good.checked
+      console.log(good)
+      let attr = this.editingShop ? "removeChecked" : "checked"
+      good[attr] = !good[attr]
+      shop[attr] = shop.goodsList.every(good => {
+        return good[attr]
       })
     },
     selectShop(shop) {
-      shop.checked = !shop.checked
+      let attr = this.editingShop ? "removeChecked" : "checked"
+      shop[attr] = !shop[attr]
       shop.goodsList.forEach(good => {
-        good.checked = shop.checked
+        good[attr] = shop[attr]
       })
     },
     selectAll() {
-      this.allSelected = !this.allSelected
+      let attr = this.editingShop ? "allRemoveSelected" : "allSelected"
+      this[attr] = !this[attr]
     },
     edit(shop,shopIndex) {
       shop.editing = !shop.editing
@@ -106,6 +134,30 @@ new Vue({
       })
       this.editingShop = shop.editing ? shop : null
       this.editingShopIndex = shop.editing ? shopIndex : -1
+    },
+    reduce(good) {
+      if(good.number === 1) return
+      axios.post(url.cartReduce,{
+        id: good.id,
+        number: 1
+      }).then(res =>{
+        good.number--
+      })
+    },
+    add(good) {
+       console.log(good)
+      axios.post(url.addCart, {
+        id: good.id,
+        number: 1
+      }).then(res => {
+        good.number++
+      })
+    },
+    remove(shop,shopIndex,good,goodIndex) {
+      this.removePopup = true
+    },
+    removeConfirm(){
+
     }
   },
   filters: {

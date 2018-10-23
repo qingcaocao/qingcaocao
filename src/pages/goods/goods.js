@@ -13,8 +13,6 @@ import qs from 'qs'
 import Foot from 'components/Foot.vue'
 import Swiper from 'components/Swipe.vue'
 
-
-
 let {id} = qs.parse(location.search.substr(1))
 let detailsTab = ['商品详情','本店成交']
 new Vue({
