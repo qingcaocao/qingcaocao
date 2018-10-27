@@ -5,6 +5,9 @@ import './cart.css'
 import Vue from 'vue'
 import axios from 'axios'
 import url from 'js/api.js'
+import Cart from 'js/cartservice.js'
+import fetch from 'js/fetch.js'
+
 
 new Vue({
   el: '#cart',
@@ -13,7 +16,9 @@ new Vue({
     total: 0,
     editingShop: null,
     editingShopindex: -1,
-    removePopup: false
+    removePopup: false,
+    removeData: null,
+    removeMsg: ''
   },
   created() {
     this.getCartList()
@@ -137,27 +142,93 @@ new Vue({
     },
     reduce(good) {
       if(good.number === 1) return
-      axios.post(url.cartReduce,{
-        id: good.id,
-        number: 1
-      }).then(res =>{
+      // axios.post(url.cartReduce,{
+      //   id: good.id,
+      //   number: 1
+      // }).then(res =>{
+      //   good.number--
+      // })
+      Cart.reduce(good.id).then(res =>{
         good.number--
       })
     },
     add(good) {
-       console.log(good)
-      axios.post(url.addCart, {
-        id: good.id,
-        number: 1
-      }).then(res => {
+      // axios.post(url.addCart, {
+      //   id: good.id,
+      //   number: 1
+      // }).then(res => {
+      //   good.number++
+      // })
+      Cart.add(good.id).then(res => {
         good.number++
       })
     },
     remove(shop,shopIndex,good,goodIndex) {
       this.removePopup = true
+      this.removeData = {
+        shop,
+        shopIndex,
+        good,
+        goodIndex
+      }
+      this.removeMsg = '确定要删除该商品吗？'
     },
-    removeConfirm(){
-
+    removeList() {
+      this.removePopup = true
+      this.removeMsg = `确定将所选 ${this.removeLists.length} 个商品删除？`
+    },
+    removeConfirm() {
+      if (this.removeMsg === '确定要删除该商品吗？') {
+        let {
+          shop,
+          shopIndex,
+          good,
+          goodIndex
+        } = this.removeData
+        fetch(url.cartRemove,{
+          id: good.id
+        }).then(res => {
+          shop.goodsList.splice(goodIndex,1)
+          if(!shop.goodsList.length){
+            this.cartList.splice(shopIndex,1)
+            this.removeShop()
+          }
+          this.removePopup = false
+        })
+      } else{
+        let ids = []
+        this.removeLists.forEach(good =>{
+          // console.log(good)
+          ids.push(good.id)
+        })
+        axios.post(url.cartMremove,{ids}).then(res => {
+          let arr =[]
+          this.editingShop.goodsList.forEach(good => {
+            let index = this.removeLists.findIndex(item => {
+              return item.id == good.id
+            })
+            if(index === -1){
+              arr.push(good)
+            }
+          })
+          if(arr.length) {
+            this.editingShop.goodsList = arr
+          } else{
+            this.cartList.splice(this.editingShopIndex,1)
+            this.removeShop()
+          }
+          this.removePopup = false
+        })
+      }
+    },
+    //删除商品后自动切换为非编辑状态
+    removeShop() {
+      this.editingShop = null
+      this.editingShopindex = -1
+      this.cartList.forEach(shop=>{
+        shop.editing = false
+        shop.editingMsg = '编辑'
+      })
     }
   },
   filters: {

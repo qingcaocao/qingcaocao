@@ -147,7 +147,10 @@
               <!-- 编辑状态 -->
               <button href="javascript:;" :disabled="!removeLists.length"
                 class="j-delete-goods btn font-size-14 btn-red"
-                v-show="editingShop">
+                v-show="editingShop"
+                :disabled="!removeLists.length"
+                @click="removeList"
+                >
                 删除
               </button>
             </div>
@@ -158,7 +161,7 @@
       <div id="0SuefKPV4p" v-show="removePopup" style="height: 100%; position: fixed; top: 0px; left: 0px; right: 0px; background-color: rgba(0, 0, 0, 0.7); z-index: 1000;  opacity: 1;"></div>
       <div id="d2tfiX27YS" v-show="removePopup" class="popout-confirm popout-box" style="overflow: hidden; position: fixed; z-index: 1000; top: 50%; left: 50%; transform: translate3d(-50%, -50%, 0px); visibility: visible; border-radius: 4px; background: white; width: 270px; padding: 15px; opacity: 1;">
         <div class="confirm-content font-size-14" style="line-height: 20px; padding: 5px 5px 10px;">
-          确定删除商品吗？
+          {{removeMsg}}
         </div>
         <hr style="margin: 9px -15px 10px;">
         <div class="btn-2-1" style="width: 47.5%;">
